@@ -3,13 +3,10 @@
 네이버 지식인에서 특정 텍스트를 포함한 질문과 응답을 크롤링하기 위해서 제작했습니다.
 
 ## 개선 진행 사항
-- 1.1
-기간이 길어져 전체 포스트 개수가 많아지면 특정 시점에서 같은 포스트가 반복이되는 것 같습니다.
+- 1.1: 기간이 길어져 전체 포스트 개수가 많아지면 특정 시점에서 같은 포스트가 반복이되는 것 같습니다.
 네이버 측에서 아마 잦은 크롤링을 방지하기 위해서 만든 것 같으니 기간을 짧게 설정하여 사용하시길 바랍니다.
 
-- 1.2
-IP를 우회하는 기능을 추가했습니다.
-브라우저를 크롬에서 파이어폭스로 변경했습니다.
+- 1.2: IP를 우회하는 기능을 추가했습니다. 브라우저를 크롬에서 파이어폭스로 변경했습니다.
 
 ## 버전
 - 1.0 : 프로젝트 업로드
@@ -78,9 +75,25 @@ webdriver와 다르게 `executable_path` 에 path를 넣어주어야 정상적�
 [selenium에서 임의의 ip로 크롤링하기 (python, Ubuntu, Firefox)](https://wkdtjsgur100.github.io/selenium-change-ip/) 를 참고했습니다.
 
 ```shell
-
+brew install tor
 ```
+로 tor를 설치한 뒤, 
+```shell
+tor
+```
+를 실행하면 9050번 포트가 열립니다.
 
+```python
+profile = webdriver.FirefoxProfile()
+profile.set_preference('general.useragent.override', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:65.0) Gecko/20100101 Firefox/65.0')
+profile.set_preference("network.proxy.type", 1)
+profile.set_preference("network.proxy.socks", "127.0.0.1")
+profile.set_preference("network.proxy.socks_port", 9050)
+
+path = "/Users/taehyung/anaconda3/envs/study/geckodriver"
+driver = webdriver.Firefox(firefox_profile=profile, executable_path=path)
+```
+그 다음 profile을 설정해 다음과 같이 설정하고 driver를 세팅해줍니다.
 
 ### 키워드 세팅
 ```python
