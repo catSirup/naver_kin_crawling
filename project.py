@@ -6,7 +6,7 @@ import time
 import openpyxl
 from openpyxl.styles import PatternFill, Color
 from openpyxl import Workbook
-import random
+from random import *
 
 # firefox 버전
 profile = webdriver.FirefoxProfile()
@@ -41,7 +41,7 @@ def sort_kind(index):
 
 keyword = '자해 자살'
 driver.get('https://kin.naver.com/search/list.nhn?query=' + get_keyword(keyword))
-driver.implicitly_wait(1000)
+time.sleep(uniform(0.1, 1.0))
 
 page_index = 1
 # 크롤링 시작 일자
@@ -58,7 +58,7 @@ date = date.replace(' ', '_')
 f = open("result/url_list" + "_" + keyword.replace(' ', '+') + "_" + date + ".txt", 'w')
 page_url = []
 while True:
-    driver.implicitly_wait(random.randint(10, 1000))
+    time.sleep(uniform(0.01, 1.0))
     driver.get('https://kin.naver.com/search/list.nhn?' + "&sort=" + _sort_kind + '&query=' + get_keyword(keyword) + period_txt + "&section=kin" + "&page=" + str(page_index))
     html = driver.page_source
     soup = BeautifulSoup(html, 'html.parser')
@@ -96,7 +96,7 @@ for j in range(1, 4):
     sheet.cell(row=1, column=j).fill = PatternFill(start_color='808080', end_color='808080', fill_type='solid')
 
 for i in page_url:
-    driver.implicitly_wait(random.randint(10, 1000))
+    time.sleep(uniform(0.01, 1.0))
     driver.get(i)
 
     title = driver.find_element_by_class_name('title').text
