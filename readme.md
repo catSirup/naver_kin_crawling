@@ -3,19 +3,29 @@
 네이버 지식인에서 특정 텍스트를 포함한 질문과 응답을 크롤링하기 위해서 제작했습니다.
 
 ## 개선 진행 사항
+- 1.1
 기간이 길어져 전체 포스트 개수가 많아지면 특정 시점에서 같은 포스트가 반복이되는 것 같습니다.
 네이버 측에서 아마 잦은 크롤링을 방지하기 위해서 만든 것 같으니 기간을 짧게 설정하여 사용하시길 바랍니다.
+
+- 1.2
+IP를 우회하는 기능을 추가했습니다.
+브라우저를 크롬에서 파이어폭스로 변경했습니다.
 
 ## 버전
 - 1.0 : 프로젝트 업로드
 - 1.1 : 페이지가 특정 범위를 넘어서도 읽히는 문제점 수정
+- 1.2 : IP 우회 기능 추가, 랜덤하게 time sleep 하는 기능을 추가.
+ 
+## 개발 환경
+Mac OS X 10.14.6
 
 ## 라이브러리
 - python 3
 - BeautifulSoup
 - Selenium
-- webdriver
+- geckodriver
 - openpyxl
+- tor
 
 ## 라이브러리 설치
 #### 1. BeautifulSoup
@@ -31,6 +41,10 @@ pip install selenium
 ```
 
 #### 3. webdriver
+```
+정보) 1.2 버전부터는 사용하지않습니다. 5. geckodriver를 참고해주세요.
+```
+
 해당 프로젝트는 크롬에서 크롤링을 하도록 만들었습니다. 다른 브라우저를 사용하실 분들은 다른 블로그에 설명이 잘 되어있으니 설명을 생략하겠습니다.
 
 [여기](https://sites.google.com/a/chromium.org/chromedriver/downloads)를 눌러 현재 사용하는 크롬의 버전과 동일한 버전을 다운로드 받습니다.
@@ -48,7 +62,25 @@ driver = webdriver.Chrome(path)
 pip install openpyxl
 ```
 
+#### 5. geckodriver
+[여기](https://github.com/mozilla/geckodriver/releases) 서 파이어폭스와 맞는 버전을 선택해서 다운받고 webdriver와 동일하게 경로를 설정해주세요.
+
+```python
+path = "/Users/taehyung/anaconda3/envs/study/geckodriver"
+driver = webdriver.Firefox(executable_path=path)
+```
+
+webdriver와 다르게 `executable_path` 에 path를 넣어주어야 정상적으로 작동합니다.
+
 ## 사용방법 
+
+### IP 우회
+[selenium에서 임의의 ip로 크롤링하기 (python, Ubuntu, Firefox)](https://wkdtjsgur100.github.io/selenium-change-ip/) 를 참고했습니다.
+
+```shell
+
+```
+
 
 ### 키워드 세팅
 ```python
