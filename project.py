@@ -39,15 +39,15 @@ def sort_kind(index):
         return 'none'
 
 
-keyword = '자해 자살'
+keyword = '자살 자해'
 driver.get('https://kin.naver.com/search/list.nhn?query=' + get_keyword(keyword))
 time.sleep(uniform(0.1, 1.0))
 
 page_index = 1
 # 크롤링 시작 일자
-f = '2019.09.01'
+f = '2019.01.01'
 # 크롤링 종료 일자
-t = '2019.10.30'
+t = '2020.02.06'
 period_txt = "&period=" + f + ".%7C" + t + "."
 
 _sort_kind = sort_kind(2)
@@ -96,15 +96,14 @@ for j in range(1, 4):
     sheet.cell(row=1, column=j).fill = PatternFill(start_color='808080', end_color='808080', fill_type='solid')
 
 for i in page_url:
-    time.sleep(uniform(0.01, 1.0))
     driver.get(i)
-
     title = driver.find_element_by_class_name('title').text
-    print(driver.find_element_by_class_name('c-heading__title-inner'))
-    if driver.find_element_by_class_name('c-heading__title-inner') != None:
-        question_txt = driver.find_element_by_class_name('c-heading__title-inner').text
-    else:
+    try:
+        question_txt = driver.find_element_by_class_name('c-heading__content').text
+        
+    except:
         question_txt = ""
+
     # 답변 리스트
     answer_list = driver.find_elements_by_class_name("se-main-container")
     
@@ -118,7 +117,7 @@ for i in page_url:
             sheet.append([title, question_txt, t])
         else:
             sheet.append(["", "", t])
-
-
-wb.save(filename)
-driver.quit()
+    
+    count += 1
+    print(count)
+    wb.save(filename)
